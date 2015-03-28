@@ -81,7 +81,7 @@
                         _accessTokenExpiration = DateTimeOffset.UtcNow.AddMinutes(AccessTokenApproxExpiresInMinutes);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // Authentication failed
                     if (Debugger.IsAttached) Debugger.Break();
