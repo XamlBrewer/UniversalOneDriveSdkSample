@@ -20,7 +20,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MVVM\BindableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MVVM\RelayCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\OneDrive.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Authentication\OneDriveSdkAuthenticationInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Authentication\LiveOAuth.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MyOneDrive.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
@@ -29,9 +32,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\StarryKnight.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StarryKnight.jpg" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>
