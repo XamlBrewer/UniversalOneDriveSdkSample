@@ -55,7 +55,7 @@
 
         // TODO: Replace the below scopes with the least permissions your app needs
         //private const string Scopes = "office.onenote_update wl.signin wl.offline_access";
-        private const string Scopes = "wl.signin wl.skydrive wl.skydrive_update";
+        private const string Scopes = "wl.signin onedrive.readwrite";
 
         private const string LiveApiMeUri = "https://apis.live.net/v5.0/me?access_token=";
 
@@ -75,6 +75,7 @@
                     var serviceTicketRequest = new OnlineIdServiceTicketRequest(Scopes, "DELEGATION");
                     var result =
                         await Authenticator.AuthenticateUserAsync(new[] { serviceTicketRequest }, CredentialPromptType.PromptIfNeeded);
+                    // TODO: catch exception when user says no
                     if (result.Tickets[0] != null)
                     {
                         _accessToken = result.Tickets[0].Value;

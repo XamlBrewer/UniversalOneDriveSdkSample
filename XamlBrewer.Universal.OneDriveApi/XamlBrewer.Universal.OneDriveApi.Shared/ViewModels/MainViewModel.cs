@@ -16,6 +16,8 @@
         private string selectedName;
         private string selectedContent;
 
+        // TODO: introduce WorkingFolder
+
         public IEnumerable<ODItem> Files
         {
             get { return files; }
@@ -28,8 +30,16 @@
             set
             {
                 this.SetProperty(ref selectedFile, value);
-                this.SelectedName = this.selectedFile.Name;
-                this.DownloadCommand.Execute(null);
+                if (this.selectedFile == null)
+                {
+                    this.SelectedName = string.Empty;
+                    this.SelectedContent = string.Empty;
+                }
+                else
+                {
+                    this.SelectedName = this.selectedFile.Name;
+                    this.DownloadCommand.Execute(null);
+                }
             }
         }
 
@@ -68,6 +78,11 @@
         public ICommand UploadCommand
         {
             get { return new RelayCommand(this.Upload_Executed); }
+        }
+
+        public ICommand ChangesCommand
+        {
+            get { return new RelayCommand(this.Changes_Executed); }
         }
 
         private async void Login_Executed()
@@ -130,6 +145,19 @@
                 this.selectedName,
                 this.selectedContent.AsStream(),
                 ItemUploadOptions.Default);
+        }
+
+        private async void Changes_Executed()
+        {
+            // Connect to root folder
+            await MyOneDrive.SetRootFolderAsCurrent();
+
+            // Create Assets (TODO: change api)
+            // This is a temporary hack to connect to the working folder
+            await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+
+            var changesResult = MyOneDrive.ViewChangesAsync();
+            var changes = changesResult.Result.Collection;
         }
     }
 }
