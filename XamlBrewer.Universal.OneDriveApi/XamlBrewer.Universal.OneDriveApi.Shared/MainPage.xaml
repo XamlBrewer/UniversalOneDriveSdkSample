@@ -25,8 +25,8 @@
         <HubSection Header="Browse">
             <DataTemplate>
                 <StackPanel>
-                    <Button Content="Initialize"
-                            Command="{Binding InitializeCommand}"
+                    <Button Content="Login"
+                            Command="{Binding LoginCommand}"
                             HorizontalAlignment="Stretch" />
                     <Button Content="(Re)create assets"
                             Command="{Binding CreateAssetsCommand}"
@@ -37,12 +37,29 @@
                             HorizontalAlignment="Stretch"
                             Margin="0 10 0 0" />
                     <ListView ItemsSource="{Binding Files}"
+                              SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
                               DisplayMemberPath="Name"
                               Margin="0 10 0 0" />
                 </StackPanel>
             </DataTemplate>
         </HubSection>
         <HubSection Header="Update">
+            <DataTemplate>
+                <StackPanel>
+                    <TextBox Text="{Binding SelectedName, Mode=TwoWay}"
+                             HorizontalAlignment="Stretch"
+                             Header="Name" />
+                    <TextBox Text="{Binding SelectedContent, Mode=TwoWay}"
+                             TextWrapping="Wrap"
+                             Header="Content"
+                             HorizontalAlignment="Stretch"
+                             Margin="0 10 0 0" />
+                    <Button Content="Upload"
+                            Command="{Binding UploadCommand}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0 10 0 0" />
+                </StackPanel>
+            </DataTemplate>
         </HubSection>
         <HubSection Header="Synchronize">
         </HubSection>

@@ -10,5 +10,11 @@
             byte[] byteArray = Encoding.UTF8.GetBytes(text);
             return new MemoryStream(byteArray);
         }
+
+        public static string AsString(this Stream stream)
+        {
+            StreamReader reader = new StreamReader(stream);
+            return reader.ReadToEnd();
+        }
     }
 }

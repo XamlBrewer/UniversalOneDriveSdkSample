@@ -13,6 +13,8 @@
     {
         private IEnumerable<ODItem> files;
         private ODItem selectedFile;
+        private string selectedName;
+        private string selectedContent;
 
         public IEnumerable<ODItem> Files
         {
@@ -23,12 +25,29 @@
         public ODItem SelectedFile
         {
             get { return selectedFile; }
-            set { this.SetProperty(ref selectedFile, value); }
+            set
+            {
+                this.SetProperty(ref selectedFile, value);
+                this.SelectedName = this.selectedFile.Name;
+                this.DownloadCommand.Execute(null);
+            }
         }
 
-        public ICommand InitializeCommand
+        public string SelectedName
         {
-            get { return new RelayCommand(this.Initialize_Executed); }
+            get { return selectedName; }
+            set { this.SetProperty(ref selectedName, value); }
+        }
+
+        public string SelectedContent
+        {
+            get { return selectedContent; }
+            set { this.SetProperty(ref selectedContent, value); }
+        }
+
+        public ICommand LoginCommand
+        {
+            get { return new RelayCommand(this.Login_Executed); }
         }
 
         public ICommand CreateAssetsCommand
@@ -41,7 +60,17 @@
             get { return new RelayCommand(this.Browse_Executed); }
         }
 
-        private async void Initialize_Executed()
+        public ICommand DownloadCommand
+        {
+            get { return new RelayCommand(this.Download_Executed); }
+        }
+
+        public ICommand UploadCommand
+        {
+            get { return new RelayCommand(this.Upload_Executed); }
+        }
+
+        private async void Login_Executed()
         {
             // Login
             await MyOneDrive.Login();
@@ -79,6 +108,28 @@
 
             // Get files
             this.Files = await MyOneDrive.GetFilesFromCurrentFolder();
+        }
+
+        private async void Download_Executed()
+        {
+            var stream = await MyOneDrive.DownloadFile(this.SelectedFile);
+            this.SelectedContent = stream.AsString();
+        }
+
+        private async void Upload_Executed()
+        {
+            // Connect to root folder
+            await MyOneDrive.SetRootFolderAsCurrent();
+
+            // Create Assets (TODO: change api)
+            // This is a temporary hack to connect to the working folder
+            await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+
+            await MyOneDrive.PutNewFileToParentItemAsync(
+                MyOneDrive.CurrentFolder.ItemReference(),
+                this.selectedName,
+                this.selectedContent.AsStream(),
+                ItemUploadOptions.Default);
         }
     }
 }
