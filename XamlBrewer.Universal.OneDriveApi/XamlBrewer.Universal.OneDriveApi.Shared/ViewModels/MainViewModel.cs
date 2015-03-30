@@ -15,6 +15,7 @@
         private ODItem selectedFile;
         private string selectedName;
         private string selectedContent;
+        private IEnumerable<ODItem> changes;
 
         // TODO: introduce WorkingFolder
 
@@ -53,6 +54,12 @@
         {
             get { return selectedContent; }
             set { this.SetProperty(ref selectedContent, value); }
+        }
+
+        public IEnumerable<ODItem> Changes
+        {
+            get { return this.changes; }
+            set { this.SetProperty(ref this.changes, value); }
         }
 
         public ICommand LoginCommand
@@ -156,8 +163,8 @@
             // This is a temporary hack to connect to the working folder
             await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
 
-            var changesResult = MyOneDrive.ViewChangesAsync();
-            var changes = changesResult.Result.Collection;
+            var changesResult = await MyOneDrive.ViewChangesAsync();
+            this.Changes = changesResult.Collection;
         }
     }
 }
