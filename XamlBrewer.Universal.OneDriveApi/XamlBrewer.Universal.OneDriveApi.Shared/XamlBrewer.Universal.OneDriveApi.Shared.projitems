@@ -33,6 +33,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StarryKnight.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\onedrive.png" />
   </ItemGroup>
 </Project>
