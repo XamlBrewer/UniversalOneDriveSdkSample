@@ -28,10 +28,17 @@
             <DataTemplate>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel HorizontalAlignment="Stretch">
-                            <Button Content="Login"
-                                    Command="{Binding LoginCommand}"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
-                                    Margin="0 24 0 0" />
+                        <Button Content="Sign in"
+                                Command="{Binding LoginCommand}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
+                                Margin="0 24 0 0" />
+                        <!-- No Sign out in universal apps -->
+                        <!--<Button Content="Sign out"
+                                Command="{Binding LogoutCommand}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
+                                Margin="0 34 0 0" />-->
                         <Button Content="(Re)create assets"
                                 Command="{Binding CreateAssetsCommand}"
                                 HorizontalAlignment="Stretch"
@@ -76,15 +83,17 @@
                     MinWidth="360"
                     HorizontalContentAlignment="Stretch">
             <DataTemplate>
-                <StackPanel>
-                    <Button Content="Get changes"
-                            Command="{Binding ChangesCommand}"
-                            HorizontalAlignment="Stretch"
-                            Margin="0 24 0 0" />
-                    <ListView ItemsSource="{Binding Changes}"
-                              DisplayMemberPath="Name"
-                              Margin="0 34 0 0" />
-                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Button Content="Get changes"
+                                Command="{Binding ChangesCommand}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0 24 0 0" />
+                        <ListView ItemsSource="{Binding Changes}"
+                                  DisplayMemberPath="Name"
+                                  Margin="0 34 0 0" />
+                    </StackPanel>
+                </ScrollViewer>
             </DataTemplate>
         </HubSection>
     </Hub>

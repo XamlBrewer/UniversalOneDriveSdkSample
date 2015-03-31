@@ -5,8 +5,6 @@
     using Services;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.IO;
-    using System.Text;
     using System.Windows.Input;
 
     class MainViewModel : BindableBase
@@ -67,6 +65,11 @@
             get { return new RelayCommand(this.Login_Executed); }
         }
 
+        public ICommand LogoutCommand
+        {
+            get { return new RelayCommand(this.Logout_Executed); }
+        }
+
         public ICommand CreateAssetsCommand
         {
             get { return new RelayCommand(this.CreateAssets_Executed); }
@@ -99,6 +102,12 @@
 
             // Connect to root folder
             await MyOneDrive.SetRootFolderAsCurrent();
+        }
+
+        private async void Logout_Executed()
+        {
+            // Logout
+            await MyOneDrive.Logout();
         }
 
         private async void CreateAssets_Executed()
