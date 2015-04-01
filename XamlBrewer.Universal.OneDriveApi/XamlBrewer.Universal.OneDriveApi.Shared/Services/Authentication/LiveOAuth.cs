@@ -1,5 +1,10 @@
 ﻿namespace XamlBrewer.Universal.OneDriveApi.Services
 {
+    //
+    // The original file can be found here:
+    // https://github.com/OneNoteDev/OneNoteAPISampleWinUniversal/blob/master/OneNoteServiceSamplesWinUniversal.Shared/OneNoteApi/Auth.cs
+    //
+
     //*********************************************************
     // Copyright (c) Microsoft Corporation
     // All rights reserved. 

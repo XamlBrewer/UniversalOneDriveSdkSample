@@ -173,6 +173,18 @@
             await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
 
             var changesResult = await MyOneDrive.ViewChangesAsync();
+
+            foreach (var item in changesResult.Collection)
+            {
+                Debug.WriteLine(item.Name + ":");
+                if (item.Deleted != null)
+                {
+                    Debug.WriteLine("Deleted: " + item.Deleted.IsDeleted);
+                }
+
+                Debug.WriteLine("Modified or added at " + item.LastModifiedDateTime.ToLocalTime());
+            }
+
             this.Changes = changesResult.Collection;
         }
     }
