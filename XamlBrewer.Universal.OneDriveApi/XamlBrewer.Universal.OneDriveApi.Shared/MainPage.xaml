@@ -114,6 +114,11 @@
                                 HorizontalAlignment="Stretch"
                                 Margin="0 34 0 0"
                                 Background="{StaticResource BackgroundBrush}" />
+                        <Button Content="Delete"
+                                Command="{Binding DeleteCommand}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0 34 0 0"
+                                Background="{StaticResource BackgroundBrush}" />
 
                     </StackPanel>
 
@@ -182,13 +187,13 @@
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}"
                                                    FontWeight="SemiBold" />
-                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D}'}" />
-                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:T}'}" />
                                         <TextBlock Text="Deleted"
                                                    Visibility="{Binding Deleted, Converter={StaticResource NullToVisibilityConverter}}"
                                                    Foreground="OrangeRed"
                                                    FontStyle="Italic"
                                                    FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D}'}" />
+                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:T}'}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

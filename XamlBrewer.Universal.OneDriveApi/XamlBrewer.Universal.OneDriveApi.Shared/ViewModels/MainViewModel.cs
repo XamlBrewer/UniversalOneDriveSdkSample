@@ -97,6 +97,11 @@
             get { return new RelayCommand(this.Upload_Executed); }
         }
 
+        public ICommand DeleteCommand
+        {
+            get { return new RelayCommand(this.Delete_Executed); }
+        }
+
         public ICommand ChangesCommand
         {
             get { return new RelayCommand(this.Changes_Executed); }
@@ -186,6 +191,15 @@
                 this.selectedName,
                 this.selectedContent.AsStream(),
                 ItemUploadOptions.Default);
+
+            this.IsBusy = false;
+        }
+
+        private async void Delete_Executed()
+        {
+            this.IsBusy = true;
+
+            await MyOneDrive.DeleteItemAsync(this.SelectedFile.ItemReference());
 
             this.IsBusy = false;
         }
