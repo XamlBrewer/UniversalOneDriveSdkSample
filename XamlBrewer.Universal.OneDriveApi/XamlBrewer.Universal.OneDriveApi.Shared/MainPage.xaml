@@ -19,8 +19,21 @@
         <vm:MainViewModel />
     </Page.DataContext>
 
-    <Hub x:Name="MainHub"
-         Header="Universal app OneDrive SDK sample">
+    <Hub x:Name="MainHub">
+        <Hub.HeaderTemplate>
+            <DataTemplate>
+                <StackPanel>
+                    <TextBlock Text="OneDrive SDK sample"
+                               Style="{StaticResource HeaderTextBlockStyle}" />
+                    <ProgressBar Grid.Column="1"
+                                 IsIndeterminate="{Binding IsBusy}"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Bottom"
+                                 Background="Transparent"
+                                 Margin="10 0 10 0" />
+                </StackPanel>
+            </DataTemplate>
+        </Hub.HeaderTemplate>
         <Hub.Background>
             <ImageBrush ImageSource="/Assets/onedrive.png"
                         Stretch="UniformToFill"
@@ -69,28 +82,37 @@
         </HubSection>
         <HubSection Header="Update"
                     MinWidth="360"
-                    HorizontalContentAlignment="Stretch">
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
             <DataTemplate>
-                <StackPanel>
-                    <TextBox Text="{Binding SelectedName, Mode=TwoWay}"
-                             HorizontalAlignment="Stretch"
-                             Header="Name"
-                             Height="60" />
-                    <TextBox Text="{Binding SelectedContent, Mode=TwoWay}"
-                             TextWrapping="Wrap"
-                             Header="Content"
-                             HorizontalAlignment="Stretch"
-                             Height="130"
-                             Margin="0 10 0 0" />
-                    <Button Content="Upload"
-                            Command="{Binding UploadCommand}"
-                            HorizontalAlignment="Stretch"
-                            Margin="0 34 0 0"
-                            Background="{StaticResource BackgroundBrush}" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <TextBox Text="{Binding SelectedName, Mode=TwoWay}"
+                                 HorizontalAlignment="Stretch"
+                                 Header="Name"
+                                 Height="60" />
+                        <TextBox Text="{Binding SelectedContent, Mode=TwoWay}"
+                                 TextWrapping="Wrap"
+                                 Header="Content"
+                                 HorizontalAlignment="Stretch"
+                                 Height="130"
+                                 Margin="0 10 0 0" />
+                        <Button Content="Upload"
+                                Command="{Binding UploadCommand}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0 34 0 0"
+                                Background="{StaticResource BackgroundBrush}" />
+
+                    </StackPanel>
+
                     <!-- Logo -->
                     <Viewbox x:Name="Logo"
                              StretchDirection="DownOnly"
-                             Margin="0 34 0 0"
+                             Margin="0 0 0 0"
                              HorizontalAlignment="Center"
                              VerticalAlignment="Bottom"
                              Grid.Row="1">
@@ -130,7 +152,7 @@
                             </Grid>
                         </Canvas>
                     </Viewbox>
-                </StackPanel>
+                </Grid>
             </DataTemplate>
         </HubSection>
         <HubSection Header="Synchronize"

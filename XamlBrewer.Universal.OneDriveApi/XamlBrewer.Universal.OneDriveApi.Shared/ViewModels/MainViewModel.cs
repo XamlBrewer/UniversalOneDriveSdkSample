@@ -14,6 +14,7 @@
         private string selectedName;
         private string selectedContent;
         private IEnumerable<ODItem> changes;
+        private bool isBusy;
 
         // TODO: introduce WorkingFolder
 
@@ -60,6 +61,12 @@
             set { this.SetProperty(ref this.changes, value); }
         }
 
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set { this.SetProperty(ref isBusy, value); }
+        }
+
         public ICommand LoginCommand
         {
             get { return new RelayCommand(this.Login_Executed); }
@@ -97,11 +104,15 @@
 
         private async void Login_Executed()
         {
+            this.IsBusy = true;
+
             // Login
             await MyOneDrive.Login();
 
             // Connect to root folder
             await MyOneDrive.SetRootFolderAsCurrent();
+
+            this.IsBusy = false;
         }
 
         private async void Logout_Executed()
@@ -112,6 +123,8 @@
 
         private async void CreateAssets_Executed()
         {
+            this.IsBusy = true;
+
             // Connect to root folder
             await MyOneDrive.SetRootFolderAsCurrent();
 
@@ -127,10 +140,14 @@
                     string.Format("This is the content of sample file {0}", i).AsStream(),
                     ItemUploadOptions.Default);
             }
+
+            this.IsBusy = false;
         }
 
         private async void Browse_Executed()
         {
+            this.IsBusy = true;
+
             // Connect to root folder
             await MyOneDrive.SetRootFolderAsCurrent();
 
@@ -139,16 +156,24 @@
 
             // Get files
             this.Files = await MyOneDrive.GetFilesFromCurrentFolder();
+
+            this.IsBusy = false;
         }
 
         private async void Download_Executed()
         {
+            this.IsBusy = true;
+
             var stream = await MyOneDrive.DownloadFile(this.SelectedFile);
             this.SelectedContent = stream.AsString();
+
+            this.isBusy = false;
         }
 
         private async void Upload_Executed()
         {
+            this.IsBusy = true;
+
             // Connect to root folder
             await MyOneDrive.SetRootFolderAsCurrent();
 
@@ -161,10 +186,14 @@
                 this.selectedName,
                 this.selectedContent.AsStream(),
                 ItemUploadOptions.Default);
+
+            this.IsBusy = false;
         }
 
         private async void Changes_Executed()
         {
+            this.IsBusy = true;
+
             // Connect to root folder
             await MyOneDrive.SetRootFolderAsCurrent();
 
@@ -186,6 +215,8 @@
             }
 
             this.Changes = changesResult.Collection;
+
+            this.IsBusy = false;
         }
     }
 }
