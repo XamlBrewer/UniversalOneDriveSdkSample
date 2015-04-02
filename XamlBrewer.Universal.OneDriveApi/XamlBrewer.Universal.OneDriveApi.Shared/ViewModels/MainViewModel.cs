@@ -3,6 +3,7 @@
     using Mvvm;
     using OneDrive;
     using Services;
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Windows.Input;
@@ -114,10 +115,19 @@
             // Login
             await MyOneDrive.Login();
 
-            // Connect to root folder
-            await MyOneDrive.SetRootFolderAsCurrent();
-
-            this.IsBusy = false;
+            try
+            {
+                // Connect to root folder
+                await MyOneDrive.SetRootFolderAsCurrent();
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async void Logout_Executed()
@@ -130,107 +140,150 @@
         {
             this.IsBusy = true;
 
-            // Connect to root folder
-            await MyOneDrive.SetRootFolderAsCurrent();
-
-            // Create Assets
-            await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
-
-            for (int i = 1; i < 9; i++)
+            try
             {
-                Debug.WriteLine("Creating file {0}", i);
-                await MyOneDrive.PutNewFileToParentItemAsync(
-                    MyOneDrive.CurrentFolder.ItemReference(),
-                    string.Format("Sample file {0}.txt", i),
-                    string.Format("This is the content of sample file {0}", i).AsStream(),
-                    ItemUploadOptions.Default);
-            }
+                // Connect to root folder
+                await MyOneDrive.SetRootFolderAsCurrent();
 
-            this.IsBusy = false;
+                // Create Assets
+                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+
+                for (int i = 1; i < 9; i++)
+                {
+                    Debug.WriteLine("Creating file {0}", i);
+                    await MyOneDrive.PutNewFileToParentItemAsync(
+                        MyOneDrive.CurrentFolder.ItemReference(),
+                        string.Format("Sample file {0}.txt", i),
+                        string.Format("This is the content of sample file {0}", i).AsStream(),
+                        ItemUploadOptions.Default);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async void Browse_Executed()
         {
             this.IsBusy = true;
 
-            // Connect to root folder
-            await MyOneDrive.SetRootFolderAsCurrent();
+            try
+            {
+                // Connect to root folder
+                await MyOneDrive.SetRootFolderAsCurrent();
 
-            // Connect to working folder (TODO: refactor API)
-            await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+                // Connect to working folder (TODO: refactor API)
+                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
 
-            // Get files
-            this.Files = await MyOneDrive.GetFilesFromCurrentFolder();
-
-            this.IsBusy = false;
+                // Get files
+                this.Files = await MyOneDrive.GetFilesFromCurrentFolder();
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async void Download_Executed()
         {
             this.IsBusy = true;
 
-            var stream = await MyOneDrive.DownloadFile(this.SelectedFile);
-            this.SelectedContent = stream.AsString();
-
-            this.IsBusy = false;
+            try
+            {
+                var stream = await MyOneDrive.DownloadFile(this.SelectedFile);
+                this.SelectedContent = stream.AsString();
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async void Upload_Executed()
         {
             this.IsBusy = true;
 
-            // Connect to root folder
-            await MyOneDrive.SetRootFolderAsCurrent();
+            try
+            {
+                // Connect to root folder
+                await MyOneDrive.SetRootFolderAsCurrent();
 
-            // Create Assets (TODO: change api)
-            // This is a temporary hack to connect to the working folder
-            await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+                // Create Assets (TODO: change api)
+                // This is a temporary hack to connect to the working folder
+                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
 
-            await MyOneDrive.PutNewFileToParentItemAsync(
-                MyOneDrive.CurrentFolder.ItemReference(),
-                this.selectedName,
-                this.selectedContent.AsStream(),
-                ItemUploadOptions.Default);
-
-            this.IsBusy = false;
+                await MyOneDrive.PutNewFileToParentItemAsync(
+                    MyOneDrive.CurrentFolder.ItemReference(),
+                    this.selectedName,
+                    this.selectedContent.AsStream(),
+                    ItemUploadOptions.Default);
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async void Delete_Executed()
         {
             this.IsBusy = true;
 
-            await MyOneDrive.DeleteItemAsync(this.SelectedFile.ItemReference());
-
-            this.IsBusy = false;
+            try
+            {
+                await MyOneDrive.DeleteItemAsync(this.SelectedFile.ItemReference());
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async void Changes_Executed()
         {
             this.IsBusy = true;
 
-            // Connect to root folder
-            await MyOneDrive.SetRootFolderAsCurrent();
-
-            // Create Assets (TODO: change api)
-            // This is a temporary hack to connect to the working folder
-            await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
-
-            var changesResult = await MyOneDrive.ViewChangesAsync();
-
-            foreach (var item in changesResult.Collection)
+            try
             {
-                Debug.WriteLine(item.Name + ":");
-                if (item.Deleted != null)
-                {
-                    Debug.WriteLine("Deleted: " + item.Deleted.IsDeleted);
-                }
+                // Connect to root folder
+                await MyOneDrive.SetRootFolderAsCurrent();
 
-                Debug.WriteLine("Modified or added at " + item.LastModifiedDateTime.ToLocalTime());
+                // Create Assets (TODO: change api)
+                // This is a temporary hack to connect to the working folder
+                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+
+                var changesResult = await MyOneDrive.ViewChangesAsync();
+
+                this.Changes = changesResult.Collection;
             }
-
-            this.Changes = changesResult.Collection;
-
-            this.IsBusy = false;
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
     }
 }
