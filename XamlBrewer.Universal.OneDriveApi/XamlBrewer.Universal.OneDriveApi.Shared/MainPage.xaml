@@ -60,7 +60,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Bottom"
                                 Margin="0 34 0 0" />-->
-                        <Button Content="Create working folder"
+                        <Button Content="Create sample files"
                                 Command="{Binding CreateAssetsCommand}"
                                 HorizontalAlignment="Stretch"
                                 Height="40"

@@ -108,7 +108,9 @@
 
         internal static bool IsSignedIn
         {
-            get { return Authenticator != null && Authenticator.CanSignOut && _accessToken != null; }
+            // I modified this condition, since Authenticator.CanSignOut is always false.
+            // I use the property to check if I'm logged in, not to check if I can display a logout link.
+            get { return Authenticator != null && _accessToken != null; }
         }
 
         internal static async Task<string> GetUserName()

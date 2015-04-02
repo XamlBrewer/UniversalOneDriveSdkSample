@@ -10,14 +10,14 @@
 
     class MainViewModel : BindableBase
     {
+        private const string _WORKING_FOLDER_NAME = "OneDrive SDK Test";
+
         private IEnumerable<ODItem> files;
         private ODItem selectedFile;
         private string selectedName;
         private string selectedContent;
         private IEnumerable<ODItem> changes;
         private bool isBusy;
-
-        // TODO: introduce WorkingFolder
 
         public IEnumerable<ODItem> Files
         {
@@ -112,13 +112,10 @@
         {
             this.IsBusy = true;
 
-            // Login
-            await MyOneDrive.Login();
-
             try
             {
-                // Connect to root folder
-                await MyOneDrive.SetRootFolderAsCurrent();
+                // Login
+                await MyOneDrive.Login();
             }
             catch (Exception ex)
             {
@@ -142,17 +139,14 @@
 
             try
             {
-                // Connect to root folder
-                await MyOneDrive.SetRootFolderAsCurrent();
-
                 // Create Assets
-                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+                await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
                 for (int i = 1; i < 9; i++)
                 {
                     Debug.WriteLine("Creating file {0}", i);
                     await MyOneDrive.PutNewFileToParentItemAsync(
-                        MyOneDrive.CurrentFolder.ItemReference(),
+                        MyOneDrive.WorkingFolder.ItemReference(),
                         string.Format("Sample file {0}.txt", i),
                         string.Format("This is the content of sample file {0}", i).AsStream(),
                         ItemUploadOptions.Default);
@@ -174,14 +168,11 @@
 
             try
             {
-                // Connect to root folder
-                await MyOneDrive.SetRootFolderAsCurrent();
-
-                // Connect to working folder (TODO: refactor API)
-                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+                // Connect to working folder
+                await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
                 // Get files
-                this.Files = await MyOneDrive.GetFilesFromCurrentFolder();
+                this.Files = await MyOneDrive.GetFilesFromWorkingFolder();
             }
             catch (Exception ex)
             {
@@ -218,15 +209,16 @@
 
             try
             {
-                // Connect to root folder
-                await MyOneDrive.SetRootFolderAsCurrent();
+                if (string.IsNullOrEmpty(this.selectedName))
+                {
+                    throw new Exception("You forgot to enter a file name.");
+                }
 
-                // Create Assets (TODO: change api)
-                // This is a temporary hack to connect to the working folder
-                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+                // Connect to working folder
+                await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
                 await MyOneDrive.PutNewFileToParentItemAsync(
-                    MyOneDrive.CurrentFolder.ItemReference(),
+                    MyOneDrive.WorkingFolder.ItemReference(),
                     this.selectedName,
                     this.selectedContent.AsStream(),
                     ItemUploadOptions.Default);
@@ -247,6 +239,11 @@
 
             try
             {
+                if (this.selectedFile == null)
+                {
+                    throw new Exception("You forgot to select a file.");
+                }
+
                 await MyOneDrive.DeleteItemAsync(this.SelectedFile.ItemReference());
             }
             catch (Exception ex)
@@ -265,12 +262,8 @@
 
             try
             {
-                // Connect to root folder
-                await MyOneDrive.SetRootFolderAsCurrent();
-
-                // Create Assets (TODO: change api)
-                // This is a temporary hack to connect to the working folder
-                await MyOneDrive.CreateChildFolderInCurrentFolder("OneDrive SDK Test");
+                // Connect to working folder
+                await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
                 var changesResult = await MyOneDrive.ViewChangesAsync();
 
