@@ -7,6 +7,12 @@
         <ResourceDictionary>
             <!-- Override the default progress bar color -->
             <x:String x:Key="ProgressBarIndeterminateForegroundThemeBrush">White</x:String>
+
+            <!-- Override the listview selected item colors -->
+            <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrush"
+                             Color="OrangeRed" />
+            <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush"
+                             Color="OrangeRed" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

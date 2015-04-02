@@ -167,7 +167,7 @@
             var stream = await MyOneDrive.DownloadFile(this.SelectedFile);
             this.SelectedContent = stream.AsString();
 
-            this.isBusy = false;
+            this.IsBusy = false;
         }
 
         private async void Upload_Executed()
