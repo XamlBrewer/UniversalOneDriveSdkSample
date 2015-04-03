@@ -108,6 +108,11 @@
             get { return new RelayCommand(this.Changes_Executed); }
         }
 
+        public ICommand ResetChangesCommand
+        {
+            get { return new RelayCommand(this.ResetChanges_Executed); }
+        }
+
         private async void Login_Executed()
         {
             this.IsBusy = true;
@@ -265,7 +270,30 @@
                 // Connect to working folder
                 await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
-                var changesResult = await MyOneDrive.ViewChangesAsync();
+                var changesResult = await MyOneDrive.ViewChanges();
+
+                this.Changes = changesResult.Collection;
+            }
+            catch (Exception ex)
+            {
+                Toast.ShowError(ex.Message);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        private async void ResetChanges_Executed()
+        {
+            this.IsBusy = true;
+
+            try
+            {
+                // Connect to working folder
+                await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
+
+                var changesResult = await MyOneDrive.ViewChanges(true);
 
                 this.Changes = changesResult.Collection;
             }

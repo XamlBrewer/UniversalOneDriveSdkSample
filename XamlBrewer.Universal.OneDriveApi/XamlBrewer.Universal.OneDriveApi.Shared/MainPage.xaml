@@ -78,12 +78,12 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}"
+                                               FontSize="20"
                                                Padding="10 5 15 0"
                                                Margin="0" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
                     </StackPanel>
                 </ScrollViewer>
             </DataTemplate>
@@ -119,7 +119,6 @@
                                 HorizontalAlignment="Stretch"
                                 Margin="0 34 0 0"
                                 Background="{StaticResource BackgroundBrush}" />
-
                     </StackPanel>
 
                     <!-- Logo -->
@@ -173,27 +172,44 @@
                     HorizontalContentAlignment="Stretch">
             <DataTemplate>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <Button Content="Get changes"
-                                Command="{Binding ChangesCommand}"
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Button Content="Get changes with reset"
+                                Command="{Binding ResetChangesCommand}"
                                 HorizontalAlignment="Stretch"
                                 Margin="0 24 0 0"
                                 Background="{StaticResource BackgroundBrush}" />
+                        <Button Content="Get changes"
+                                Command="{Binding ChangesCommand}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0 32 0 0"
+                                Background="{StaticResource BackgroundBrush}" />
                         <ListView ItemsSource="{Binding Changes}"
                                   SelectionMode="None"
-                                  Margin="0 34 0 0">
+                                  Margin="0 34 0 0"
+                                  HorizontalContentAlignment="Stretch">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
+                                        <Line Fill="White"
+                                              Stroke="White"
+                                              StrokeThickness="2"
+                                              X1="0"
+                                              Y1="0"
+                                              X2="240"
+                                              Y2="0" />
                                         <TextBlock Text="{Binding Name}"
-                                                   FontWeight="SemiBold" />
+                                                   FontWeight="SemiBold"
+                                                   FontSize="20" />
                                         <TextBlock Text="Deleted"
                                                    Visibility="{Binding Deleted, Converter={StaticResource NullToVisibilityConverter}}"
                                                    Foreground="OrangeRed"
                                                    FontStyle="Italic"
-                                                   FontWeight="SemiBold" />
-                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D}'}" />
-                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:T}'}" />
+                                                   FontWeight="SemiBold"
+                                                   FontSize="20" />
+                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:D}'}"
+                                                   FontSize="20" />
+                                        <TextBlock Text="{Binding LastModifiedDateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:T}'}"
+                                                   FontSize="20" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
