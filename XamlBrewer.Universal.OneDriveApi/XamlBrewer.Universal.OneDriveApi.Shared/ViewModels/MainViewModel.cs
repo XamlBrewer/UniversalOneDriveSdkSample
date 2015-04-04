@@ -150,11 +150,10 @@
                 for (int i = 1; i < 9; i++)
                 {
                     Debug.WriteLine("Creating file {0}", i);
-                    await MyOneDrive.PutNewFileToParentItemAsync(
-                        MyOneDrive.WorkingFolder.ItemReference(),
+                    await MyOneDrive.SaveFile(
+                        MyOneDrive.WorkingFolder,
                         string.Format("Sample file {0}.txt", i),
-                        string.Format("This is the content of sample file {0}", i).AsStream(),
-                        ItemUploadOptions.Default);
+                        string.Format("This is the content of sample file {0}", i).AsStream());
                 }
             }
             catch (Exception ex)
@@ -222,11 +221,10 @@
                 // Connect to working folder
                 await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
-                await MyOneDrive.PutNewFileToParentItemAsync(
-                    MyOneDrive.WorkingFolder.ItemReference(),
+                await MyOneDrive.SaveFile(
+                    MyOneDrive.WorkingFolder,
                     this.selectedName,
-                    this.selectedContent.AsStream(),
-                    ItemUploadOptions.Default);
+                    this.selectedContent.AsStream());
 
                 Toast.ShowInfo("Upload successful.");
             }
@@ -251,7 +249,7 @@
                     throw new Exception("You forgot to select a file.");
                 }
 
-                await MyOneDrive.DeleteItemAsync(this.SelectedFile.ItemReference());
+                await MyOneDrive.DeleteItem(this.SelectedFile);
 
                 Toast.ShowInfo("Delete successful.");
             }
