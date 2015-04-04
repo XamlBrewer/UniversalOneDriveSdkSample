@@ -227,6 +227,8 @@
                     this.selectedName,
                     this.selectedContent.AsStream(),
                     ItemUploadOptions.Default);
+
+                Toast.ShowInfo("Upload successful.");
             }
             catch (Exception ex)
             {
@@ -250,6 +252,8 @@
                 }
 
                 await MyOneDrive.DeleteItemAsync(this.SelectedFile.ItemReference());
+
+                Toast.ShowInfo("Delete successful.");
             }
             catch (Exception ex)
             {
