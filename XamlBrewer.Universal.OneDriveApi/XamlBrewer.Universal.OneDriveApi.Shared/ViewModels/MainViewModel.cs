@@ -176,7 +176,7 @@
                 await MyOneDrive.SetWorkingFolder(_WORKING_FOLDER_NAME);
 
                 // Get files
-                this.Files = await MyOneDrive.GetFilesFromWorkingFolder();
+                this.Files = await MyOneDrive.GetFiles(MyOneDrive.WorkingFolder);
             }
             catch (Exception ex)
             {

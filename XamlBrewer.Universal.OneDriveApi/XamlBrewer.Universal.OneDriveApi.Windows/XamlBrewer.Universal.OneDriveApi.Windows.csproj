@@ -117,6 +117,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="XamlBrewer.Universal.OneDriveApi.Windows_StoreKey.pfx" />
     <None Include="XamlBrewer.Universal.OneDriveApi.Windows_TemporaryKey.pfx" />

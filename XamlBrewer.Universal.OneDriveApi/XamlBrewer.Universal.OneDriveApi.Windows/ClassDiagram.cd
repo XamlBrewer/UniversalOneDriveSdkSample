@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XamlBrewer.Universal.OneDriveApi.Services.MyOneDrive">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAkAAGAAAAAAAAEAASAAAAIAAAIAAAAABAAQABAAAAA=</HashCode>
+      <FileName>C:\DevProjects\XamlBrewer.Universal.OneDriveApi\XamlBrewer.Universal.OneDriveApi\XamlBrewer.Universal.OneDriveApi.Shared\Services\MyOneDrive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XamlBrewer.Universal.OneDriveApi.Services.LiveOAuth">
+    <Position X="3.75" Y="0.5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAACAAGAAAICAAkQAgACAAAAABMAAAAIDAAgAAQAE=</HashCode>
+      <FileName>C:\DevProjects\XamlBrewer.Universal.OneDriveApi\XamlBrewer.Universal.OneDriveApi\XamlBrewer.Universal.OneDriveApi.Shared\Services\Authentication\LiveOAuth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XamlBrewer.Universal.OneDriveApi.Services.OneDriveSdkAuthenticationInfo">
+    <Position X="7" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAQAAAAAAAAAAAAoAAEAAAAAAAAAAAAAAAEgA=</HashCode>
+      <FileName>C:\DevProjects\XamlBrewer.Universal.OneDriveApi\XamlBrewer.Universal.OneDriveApi\XamlBrewer.Universal.OneDriveApi.Shared\Services\Authentication\OneDriveSdkAuthenticationInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OneDrive.ODConnection">
+    <Position X="0.5" Y="4.75" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="OneDrive.ODItem">
+    <Position X="3.75" Y="4.75" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="OneDrive.IAuthenticationInfo">
+    <Position X="7" Y="4.75" Width="2.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
