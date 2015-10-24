@@ -46,7 +46,7 @@
         /// </summary>
         public static async Task<ODItem> SetWorkingFolder(string folderName)
         {
-            EnsureConnection();
+            await EnsureConnection();
 
             // Connect to OneDrive root.
             var rootFolder = await Connection.GetRootItemAsync(ItemRetrievalOptions.DefaultWithChildren);
@@ -81,7 +81,7 @@
         /// </summary>
         public static async Task<ODItem> SaveFile(ODItem parentItem, string filename, Stream fileContent)
         {
-            EnsureConnection();
+            await EnsureConnection();
 
             return await Connection.PutNewFileToParentItemAsync(parentItem.ItemReference(), filename, fileContent, ItemUploadOptions.Default);
         }
@@ -91,7 +91,7 @@
         /// </summary>
         public static async Task<bool> DeleteItem(ODItem item)
         {
-            EnsureConnection();
+            await EnsureConnection();
 
             return await Connection.DeleteItemAsync(item.ItemReference(), ItemDeleteOptions.Default);
         }
@@ -101,7 +101,7 @@
         /// </summary>
         public static async Task<IEnumerable<ODItem>> GetFiles(ODItem parentItem)
         {
-            EnsureConnection();
+            await EnsureConnection();
 
             List<ODItem> result = new List<ODItem>();
             var page = await parentItem.PagedChildrenCollectionAsync(Connection, ChildrenRetrievalOptions.Default);
@@ -131,7 +131,7 @@
         /// </summary>
         public static async Task<Stream> DownloadFile(ODItem item)
         {
-            EnsureConnection();
+            await EnsureConnection();
 
             return await item.GetContentStreamAsync(Connection, StreamDownloadOptions.Default);
         }
@@ -143,7 +143,7 @@
         /// <remarks>In the first call and whenever the token is reset, the whole folder's content is returned.</remarks>
         public static async Task<ODViewChangesResult> ViewChanges(bool reset = false)
         {
-            EnsureConnection();
+            await EnsureConnection();
 
             if (reset)
             {
@@ -161,11 +161,15 @@
         /// <summary>
         /// Verifies if the user is authenticated and connected.
         /// </summary>
-        private static void EnsureConnection()
+        private async static Task EnsureConnection()
         {
             if (Connection == null || !LiveOAuth.IsSignedIn)
             {
                 throw new Exception("You're not logged in.");
+            }
+            else
+            {
+                await LiveOAuth.RefreshAuthTokenIfNeeded();
             }
         }
     }

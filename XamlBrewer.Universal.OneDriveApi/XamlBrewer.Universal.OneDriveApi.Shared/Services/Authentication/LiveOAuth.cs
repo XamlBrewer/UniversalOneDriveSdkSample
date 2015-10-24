@@ -148,7 +148,7 @@
         /// <summary>
         ///  Refreshes the live authentication access token if it has expired
         /// </summary>
-        private static async Task RefreshAuthTokenIfNeeded()
+        public static async Task RefreshAuthTokenIfNeeded()
         {
             if (_accessTokenExpiration.CompareTo(DateTimeOffset.UtcNow) <= 0)
             {
